@@ -1,0 +1,32 @@
+@model Portfolio.Models.Project
+@{ ViewData["Title"] = Model.Id == 0 ? "Add Project" : "Edit " + Model.Title; }
+<section class="section narrow">
+    <a class="back" asp-action="Index">← Dashboard</a>
+    <h1>@(Model.Id == 0 ? "Add project" : "Edit project")</h1>
+    <p class="muted">Edit text, links <strong>and pictures</strong> here — thumbnail Image URL updates the card + detail page instantly.</p>
+    <nav class="toc admin-tabs" aria-label="Admin sections">
+        <a asp-action="Index">Dashboard</a>
+        <a asp-action="Projects">Projects</a>
+        <a asp-action="Appearance">Appearance</a>
+        <a asp-action="Profile">Profile</a>
+    </nav>
+    @if (ViewData["Error"] != null) { <div class="error">@ViewData["Error"]</div> }
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="glass panel cform big">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div class="frow"><label>Title*<input asp-for="Title" required /></label><label>Slug<input asp-for="Slug" placeholder="auto-from-title" /></label></div>
+        <label>Short description<input asp-for="ShortDescription" /></label>
+        <label>Description<textarea asp-for="Description" rows="3"></textarea></label>
+        <div class="frow"><label>Category<input asp-for="Category" /></label><label>Status<input asp-for="Status" /></label><label>Year<input asp-for="Year" type="number" /></label></div>
+        <label>Picture / thumbnail — Image URL<input id="imgUrl" asp-for="ImageUrl" placeholder="https://..." oninput="document.getElementById('imgPreview').src=this.value" /></label>
+        <label>…or upload picture<input type="file" name="photoFile" accept=".jpg,.jpeg,.png,.gif,.webp" onchange="if(this.files[0])document.getElementById('imgPreview').src=URL.createObjectURL(this.files[0])" /></label>
+        <div class="img-preview"><img id="imgPreview" src="@Model.ImageUrl" alt="preview" onerror="this.src='https://picsum.photos/seed/@(Model.Id == 0 ? 99 : Model.Id)/800/400'" /><small class="muted">Live picture preview. Upload (JPG/PNG/GIF/WebP, 5MB max) or paste any image link. Empty = placeholder.</small></div>
+        <div class="frow"><label>GitHub URL<input asp-for="GitHubUrl" placeholder="https://github.com/you/repo" /></label><label>Live URL<input asp-for="LiveUrl" placeholder="https://..." /></label></div>
+        <label>Technologies (comma separated)<input name="techCsv" value="@string.Join(", ", Model.Technologies)" placeholder="C#, ASP.NET Core, SQL" /></label>
+        <label>Features (one per line)<textarea name="featuresCsv" rows="3">@string.Join("\n", Model.Features)</textarea></label>
+        <label>Problem<textarea asp-for="Problem" rows="2"></textarea></label>
+        <label>Solution<textarea asp-for="Solution" rows="2"></textarea></label>
+        <label class="check"><input asp-for="Featured" type="checkbox" /> Featured on homepage</label>
+        <div class="hero-cta"><button class="btn btn-primary" type="submit">Save →</button><a class="btn btn-ghost" asp-action="Projects">Cancel</a></div>
+    </form>
+</section>

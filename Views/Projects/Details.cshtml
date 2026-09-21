@@ -1,0 +1,57 @@
+@model Portfolio.Models.Project
+@{
+    ViewData["Title"] = Model.Title;
+    var comments = ViewData["Comments"] as List<Portfolio.Models.Comment> ?? new();
+    var related = ViewData["Related"] as List<Portfolio.Models.Project> ?? new();
+}
+<section class="section narrow">
+    <a class="back" asp-action="Index">← Table of contents</a>
+    @if (Context.Session.GetString("IsAdmin") == "true")
+    {
+        <div class="admin-inline glass"><span>ADMIN:</span><a class="btn btn-primary sm" asp-controller="Admin" asp-action="Edit" asp-route-id="@Model.Id">✎ Edit this project</a></div>
+    }
+    <div class="detail-hero reveal">
+        <img src="@Model.ImageUrl" alt="@Model.Title" onerror="this.src='https://picsum.photos/seed/@Model.Id/1200/600'" />
+        <div class="detail-overlay">
+            <span class="chip">@Model.Category</span>
+            <span class="chip ghost">@Model.Status · @Model.Year</span>
+        </div>
+    </div>
+    <h1>@Model.Title</h1>
+    <p class="lede">@Model.Description</p>
+    <div class="tags big">@foreach (var t in Model.Technologies) { <span>@t</span> }</div>
+    <div class="link-row">
+        @if (!string.IsNullOrWhiteSpace(Model.GitHubUrl)) { <a class="btn btn-primary magnetic" href="@Model.GitHubUrl" target="_blank" rel="noopener">GitHub ↗</a> }
+        @if (!string.IsNullOrWhiteSpace(Model.LiveUrl)) { <a class="btn btn-ghost magnetic" href="@Model.LiveUrl" target="_blank" rel="noopener">Live demo ↗</a> }
+    </div>
+    <div class="split">
+        <div class="glass panel"><h3>Problem</h3><p>@Model.Problem</p></div>
+        <div class="glass panel"><h3>Solution</h3><p>@Model.Solution</p></div>
+    </div>
+    @if (Model.Features.Any()) { <div class="glass panel"><h3>Features</h3><ul class="feat">@foreach (var f in Model.Features) { <li>@f</li> }</ul></div> }
+
+    <div class="glass panel comments" id="comments">
+        <h3>Comments (@comments.Count)</h3>
+        <form asp-action="Comment" asp-route-id="@Model.Id" method="post" class="cform">
+            @Html.AntiForgeryToken()
+            <input name="author" maxlength="60" placeholder="Your name" required />
+            <textarea name="text" maxlength="1000" placeholder="Write a comment..." required></textarea>
+            <button class="btn btn-primary" type="submit">Post comment</button>
+        </form>
+        <div class="clist">
+            @if (!comments.Any()) { <p class="muted">No comments yet — be the first!</p> }
+            @foreach (var c in comments)
+            {
+            <div class="comment"><div class="c-head"><strong>@c.Author</strong><span>@c.CreatedAt.ToLocalTime().ToString("MMM d, yyyy h:mm tt")</span></div><p>@c.Text</p></div>
+            }
+        </div>
+    </div>
+
+    @if (related.Any())
+    {
+    <h3>Related in @Model.Category</h3>
+    <div class="grid small">
+        @foreach (var r in related) { <a class="card" asp-action="Details" asp-route-id="@r.Id"><div class="card-img"><img src="@r.ImageUrl" alt="@r.Title" loading="lazy" onerror="this.src='https://picsum.photos/seed/@r.Id/800/500'" /></div><div class="card-body"><h3>@r.Title →</h3></div></a> }
+    </div>
+    }
+</section>

@@ -1,0 +1,97 @@
+﻿@using Portfolio.Data
+@{
+    var site = PortfolioStore.Site;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @site.DisplayName @site.BrandSuffix Portfolio</title>
+    <meta name="description" content="Modern MVC portfolio with projects, details, comments and admin mode." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        :root {
+            --primary: @site.Primary;
+            --blue: @site.Secondary;
+            --cyan: @site.Accent;
+            --bg: @site.Background;
+            --card: @site.Surface;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">@if (!string.IsNullOrWhiteSpace(site.ProfileImageUrl)) { <img class="loader-photo" src="@site.ProfileImageUrl" alt="" /> } else { <div class="loader-mark">@(site.DisplayName.Length > 0 ? site.DisplayName.Substring(0, 1) : "J")</div> }<div class="loader-bar"><span></span></div></div>
+    <canvas id="stars" aria-hidden="true"></canvas>
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+
+    <header class="nav-wrap">
+        @if (Context.Session.GetString("IsAdmin") == "true")
+        {
+            <div class="admin-bar glass" role="navigation" aria-label="Admin">
+                <span class="admin-bar-label">ADMIN MODE</span>
+            </div>
+        }
+        <nav class="nav glass" id="mainNav" aria-label="Main">
+            <a class="brand" asp-controller="Home" asp-action="Index"><span class="brand-dot"></span> @site.DisplayName<span class="accent">@site.BrandSuffix</span></a>
+            <div class="nav-links" id="navLinks">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Projects" asp-action="Index">Projects</a>
+                <a asp-controller="Home" asp-action="About">About</a>
+                <button class="pill-contact" type="button" data-open-contact>Contact me</button>
+                @if (Context.Session.GetString("IsAdmin") == "true")
+                {
+                    <a asp-controller="Admin" asp-action="Index" class="pill-admin">Dashboard</a>
+                    <div class="dropdown">
+                        <button class="drop-btn" type="button" aria-haspopup="true">⚙ Settings ▾</button>
+                        <div class="drop-menu glass">
+                            <a asp-controller="Admin" asp-action="Appearance">Change appearance</a>
+                            <a asp-controller="Admin" asp-action="Profile">Customize profile</a>
+                        </div>
+                    </div>
+                    <a class="drop-btn" asp-controller="Account" asp-action="Logout">Logout</a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="pill-login">Admin Login</a>
+                }
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner center">
+            <span>© 2026 @site.DisplayName · Designed & built with passion</span>
+        </div>
+    </footer>
+
+    <div class="modal-backdrop" id="contactModal" hidden>
+        <div class="modal glass" role="dialog" aria-modal="true" aria-label="Contact me">
+            <button class="modal-x" type="button" data-close-contact aria-label="Close">✕</button>
+            <span class="badge">CONTACT ME</span>
+            <h2>Let's connect</h2>
+            <p class="muted">Find me on any of these:</p>
+            <div class="contact-links">
+                <a class="btn btn-ghost" href="@site.GitHubUrl" target="_blank" rel="noopener">GitHub ↗</a>
+                <a class="btn btn-ghost" href="@site.FacebookUrl" target="_blank" rel="noopener">Facebook ↗</a>
+                <a class="btn btn-ghost" href="@site.LinkedInUrl" target="_blank" rel="noopener">LinkedIn ↗</a>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["Toast"] != null)
+    {
+        <div class="toast" id="toast" role="status">@TempData["Toast"]</div>
+    }
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,40 @@
+@model List<Portfolio.Models.Project>
+@{ ViewData["Title"] = "Admin Dashboard"; }
+<section class="section">
+    <span class="badge">ADMIN MODE · PRIVATE</span>
+    <h1>Dashboard</h1>
+    <nav class="toc admin-tabs" aria-label="Admin sections">
+        <a class="on" asp-action="Index">Dashboard</a>
+        <a asp-action="Projects">Projects</a>
+    </nav>
+    <div class="dash-stats">
+        <div class="glass dstat"><strong>@ViewData["TotalProjects"]</strong><span>Projects</span></div>
+        <div class="glass dstat"><strong>@ViewData["Categories"]</strong><span>Categories</span></div>
+        <div class="glass dstat"><strong>@ViewData["Featured"]</strong><span>Featured</span></div>
+        <div class="glass dstat"><strong>@ViewData["TotalComments"]</strong><span>Comments</span></div>
+    </div>
+    <div class="admin-actions">
+        <a class="btn btn-primary" asp-action="Create">+ Add Project</a>
+        <a class="btn btn-ghost" asp-controller="Projects" asp-action="Index">Preview website</a>
+        <form asp-action="Reset" method="post" class="inline" data-confirm="Reset to default demo content?">@Html.AntiForgeryToken()<button class="btn btn-danger-ghost" type="submit">Reset to default</button></form>
+    </div>
+    <div class="glass panel table-wrap" id="projects-list">
+        <table class="tbl">
+            <thead><tr><th>ID</th><th>Project</th><th>Category</th><th>GitHub</th><th>Year</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td><strong>@p.Title</strong><br><small class="muted">@p.ShortDescription</small></td>
+                    <td>@p.Category</td>
+                    <td>@if(!string.IsNullOrWhiteSpace(p.GitHubUrl)){<a href="@p.GitHubUrl" target="_blank" rel="noopener">link ↗</a>}else{<span class="muted">—</span>}</td>
+                    <td>@p.Year</td>
+                    <td class="row-act"><a class="btn btn-ghost sm" asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@p.Id" method="post" class="inline" data-confirm="Delete @p.Title?">@Html.AntiForgeryToken()<button class="btn btn-danger-ghost sm" type="submit">Delete</button></form></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>

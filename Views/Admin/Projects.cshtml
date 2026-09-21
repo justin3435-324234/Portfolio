@@ -1,0 +1,34 @@
+@model List<Portfolio.Models.Project>
+@{ ViewData["Title"] = "Manage Projects"; }
+<section class="section">
+    <span class="badge">ADMIN MODE · PROJECTS</span>
+    <h1>Projects</h1>
+    <nav class="toc admin-tabs" aria-label="Admin sections">
+        <a asp-action="Index">Dashboard</a>
+        <a class="on" asp-action="Projects">Projects</a>
+    </nav>
+    <div class="admin-actions">
+        <a class="btn btn-primary" asp-action="Create">+ Add Project</a>
+        <a class="btn btn-ghost" asp-controller="Projects" asp-action="Index">Preview website</a>
+    </div>
+    <div class="glass panel table-wrap">
+        <table class="tbl">
+            <thead><tr><th>ID</th><th>Project</th><th>Category</th><th>GitHub</th><th>Year</th><th>Featured</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td><strong>@p.Title</strong><br><small class="muted">@p.ShortDescription</small></td>
+                    <td>@p.Category</td>
+                    <td>@if(!string.IsNullOrWhiteSpace(p.GitHubUrl)){<a href="@p.GitHubUrl" target="_blank" rel="noopener">link ↗</a>}else{<span class="muted">—</span>}</td>
+                    <td>@p.Year</td>
+                    <td>@(p.Featured ? "★" : "—")</td>
+                    <td class="row-act"><a class="btn btn-ghost sm" asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@p.Id" method="post" class="inline" data-confirm="Delete @p.Title?">@Html.AntiForgeryToken()<button class="btn btn-danger-ghost sm" type="submit">Delete</button></form></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>

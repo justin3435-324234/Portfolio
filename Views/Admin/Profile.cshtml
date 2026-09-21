@@ -1,0 +1,32 @@
+@model Portfolio.Models.SiteSettings
+@{ ViewData["Title"] = "Edit Profile"; }
+<section class="section narrow">
+    <span class="badge">ADMIN MODE · PROFILE</span>
+    <h1>Customize profile</h1>
+    <p class="muted">Updates your name, photo, headline, bio and links across the site.</p>
+    <nav class="toc admin-tabs" aria-label="Admin sections">
+        <a asp-action="Index">Dashboard</a>
+        <a asp-action="Projects">Projects</a>
+    </nav>
+    @if (ViewData["Error"] != null) { <div class="error">@ViewData["Error"]</div> }
+    <form asp-action="Profile" method="post" enctype="multipart/form-data" class="glass panel cform big">
+        @Html.AntiForgeryToken()
+        <div class="photo-row">
+            <img id="photoPreview" class="profile-photo" src="@(string.IsNullOrWhiteSpace(Model.ProfileImageUrl) ? "https://picsum.photos/seed/profile/300/300" : Model.ProfileImageUrl)" alt="profile preview" />
+            <div>
+                <label>Upload picture<input type="file" name="photoFile" accept=".jpg,.jpeg,.png,.gif,.webp" onchange="if(this.files[0])document.getElementById('photoPreview').src=URL.createObjectURL(this.files[0])" /></label>
+                <small class="muted">JPG, PNG, GIF or WebP, max 5MB. Upload replaces the URL below.</small>
+                <label class="check"><input type="checkbox" name="removePhoto" value="true" /> Remove photo</label>
+            </div>
+        </div>
+        <label>…or photo URL<input asp-for="ProfileImageUrl" placeholder="https://..." /></label>
+        <div class="frow"><label>Display name<input asp-for="DisplayName" /></label><label>Brand suffix<input asp-for="BrandSuffix" /></label></div>
+        <label>Headline<input asp-for="Headline" /></label>
+        <label>Intro<textarea asp-for="Intro" rows="3"></textarea></label>
+        <label>Bio (About page)<textarea asp-for="Bio" rows="4"></textarea></label>
+        <label>Skills (comma-separated)<textarea name="skillsCsv" rows="2" placeholder="C#, ASP.NET Core, SQL, JavaScript...">@string.Join(", ", Model.Skills ?? new List<string>())</textarea></label>
+        <div class="frow"><label>Location<input asp-for="Location" /></label><label>Availability<input asp-for="Availability" /></label></div>
+        <div class="frow"><label>GitHub URL<input asp-for="GitHubUrl" /></label><label>Facebook URL<input asp-for="FacebookUrl" /></label><label>LinkedIn URL<input asp-for="LinkedInUrl" /></label></div>
+        <div class="hero-cta"><button class="btn btn-primary" type="submit">Save profile →</button></div>
+    </form>
+</section>

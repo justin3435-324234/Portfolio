@@ -1,0 +1,41 @@
+@model List<Portfolio.Models.Project>
+@{
+    ViewData["Title"] = "Projects";
+    var cats = ViewData["Categories"] as List<string> ?? new();
+    var active = ViewData["ActiveCategory"] as string ?? "All";
+    var isAdmin = Context.Session.GetString("IsAdmin") == "true";
+}
+<section class="section">
+    <span class="badge">TABLE OF CONTENTS</span>
+    <h1 class="reveal">Projects <span class="grad">(@Model.Count)</span></h1>
+    <nav class="toc reveal" aria-label="Table of contents">
+        <a class="@(active=="All"?"on":"")" asp-action="Index">All</a>
+        @foreach (var c in cats) { <a class="@(active==c?"on":"")" asp-action="Index" asp-route-category="@c">@c</a> }
+    </nav>
+    <ol class="toc-list">
+        @foreach (var g in Model.GroupBy(p => p.Category).OrderBy(g => g.Key))
+        {
+        <li class="reveal">
+            <h2>@g.Key <small>(@g.Count())</small></h2>
+            <div class="grid">
+                @foreach (var p in g.OrderByDescending(x => x.Year))
+                {
+                <div class="card-wrap">
+                <a class="card" asp-action="Details" asp-route-id="@p.Id">
+                    <div class="card-img"><img src="@p.ImageUrl" alt="@p.Title thumbnail" loading="lazy" onerror="this.src='https://picsum.photos/seed/@p.Id/800/500'" /><span class="chip">@p.Status</span></div>
+                    <div class="card-body">
+                        <h3>@p.Title <span class="arrow">→</span></h3>
+                        <p>@p.ShortDescription</p>
+                        <div class="tags">@foreach (var t in p.Technologies.Take(4)) { <span>@t</span> }</div>
+                        <div class="meta">🔗 GitHub · 💬 Comments · 📅 @p.Year</div>
+                    </div>
+                </a>
+                @if (isAdmin) { <a class="mini-edit" asp-controller="Admin" asp-action="Edit" asp-route-id="@p.Id">✎ Edit project</a> }
+                </div>
+                }
+            </div>
+        </li>
+        }
+    </ol>
+    @if (!Model.Any()) { <div class="empty glass"><h3>No projects yet.</h3><p>Login as admin to add your first project.</p></div> }
+</section>

@@ -1,0 +1,18 @@
+{
+  "Primary": "#8b5cf6",
+  "Secondary": "#3b82f6",
+  "Accent": "#22d3ee",
+  "Background": "#07070a",
+  "Surface": "#12121a",
+  "DisplayName": "JUSTIN",
+  "BrandSuffix": ".DEV",
+  "Headline": "CRAFTING DIGITAL EXPERIENCES",
+  "Intro": "Hi, I\u0027m Justin \u2014 a developer focused on modern web apps, clean MVC architecture, and delightful UI. Browse my work, open any project, and leave a comment.",
+  "Bio": "I build modern digital experiences with C#, ASP.NET Core MVC, and clean frontend design. This portfolio is my Prefinals Quiz submission: an MVC app with a table of contents, detail pages, comments, and a hardcoded admin login.",
+  "Location": "Philippines",
+  "Availability": "Available for projects",
+  "ProfileImageUrl": "",
+  "GitHubUrl": "https://github.com/",
+  "FacebookUrl": "https://facebook.com/",
+  "LinkedInUrl": "https://linkedin.com/"
+}

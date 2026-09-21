@@ -1,0 +1,168 @@
+[
+  {
+    "Id": 1,
+    "Title": "Neon Task Manager",
+    "Slug": "neon-task-manager",
+    "ShortDescription": "Kanban task app with drag-and-drop and dark neon UI.",
+    "Description": "A full-featured Kanban task manager with boards, labels, and local persistence. Built to stay fast with hundreds of cards.",
+    "Category": "Web Development",
+    "Status": "Completed",
+    "Year": 2026,
+    "Featured": true,
+    "ImageUrl": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200\u0026q=80",
+    "Technologies": [
+      "C#",
+      "ASP.NET Core",
+      "JavaScript",
+      "SQL"
+    ],
+    "LiveUrl": "",
+    "GitHubUrl": "https://github.com/",
+    "Problem": "Teams needed a fast board without heavy SaaS overhead.",
+    "Solution": "Built a lightweight MVC \u002B JS board with JSON persistence and instant filtering.",
+    "Features": [
+      "Drag-and-drop boards",
+      "Labels \u0026 filters",
+      "Progress stats",
+      "Responsive layout"
+    ]
+  },
+  {
+    "Id": 2,
+    "Title": "Aurora Weather App",
+    "Slug": "aurora-weather",
+    "ShortDescription": "Beautiful weather dashboard with hourly forecasts.",
+    "Description": "Weather dashboard consuming a public API with geolocation, hourly/daily views and animated backgrounds.",
+    "Category": "Application Development",
+    "Status": "Completed",
+    "Year": 2025,
+    "Featured": true,
+    "ImageUrl": "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=1200\u0026q=80",
+    "Technologies": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "REST API"
+    ],
+    "LiveUrl": "",
+    "GitHubUrl": "https://github.com/",
+    "Problem": "Default weather apps felt cluttered and slow.",
+    "Solution": "Designed a minimal aurora-themed UI with cached API responses.",
+    "Features": [
+      "Geolocation",
+      "Hourly forecast",
+      "Animated sky",
+      "PWA-ready"
+    ]
+  },
+  {
+    "Id": 3,
+    "Title": "Campus E-Commerce",
+    "Slug": "campus-ecommerce",
+    "ShortDescription": "Storefront for student sellers with cart and checkout flow.",
+    "Description": "Complete storefront: catalog, cart, checkout simulation, order history and admin product management.",
+    "Category": "Web Development",
+    "Status": "In Progress",
+    "Year": 2026,
+    "Featured": false,
+    "ImageUrl": "https://images.unsplash.com/photo-1557821552-171051766652?w=1200\u0026q=80",
+    "Technologies": [
+      "C#",
+      "ASP.NET Core",
+      "Bootstrap",
+      "SQL"
+    ],
+    "LiveUrl": "",
+    "GitHubUrl": "https://github.com/",
+    "Problem": "Students had no simple place to sell on campus.",
+    "Solution": "Built an MVC storefront with Table of Contents categories and detail pages.",
+    "Features": [
+      "Catalog \u002B TOC",
+      "Cart flow",
+      "Order tracking",
+      "Admin CRUD"
+    ]
+  },
+  {
+    "Id": 4,
+    "Title": "Dev Portfolio API",
+    "Slug": "dev-portfolio-api",
+    "ShortDescription": "REST API serving projects, skills and blog posts.",
+    "Description": "Clean REST API with versioning, pagination and Swagger docs, backing this portfolio.",
+    "Category": "Cloud Development",
+    "Status": "Completed",
+    "Year": 2025,
+    "Featured": false,
+    "ImageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200\u0026q=80",
+    "Technologies": [
+      "C#",
+      ".NET",
+      "REST",
+      "AWS"
+    ],
+    "LiveUrl": "",
+    "GitHubUrl": "https://github.com/",
+    "Problem": "Portfolio data was hardcoded in views.",
+    "Solution": "Extracted a versioned API with seed data and caching.",
+    "Features": [
+      "Versioning",
+      "Pagination",
+      "Swagger",
+      "Caching"
+    ]
+  },
+  {
+    "Id": 5,
+    "Title": "Pixel Chat Prototype",
+    "Slug": "pixel-chat",
+    "ShortDescription": "Realtime chat prototype with rooms and typing indicators.",
+    "Description": "Realtime prototype with rooms, presence and typing indicators. Edit GitHub link in Admin mode.",
+    "Category": "Prototyping",
+    "Status": "Completed",
+    "Year": 2024,
+    "Featured": false,
+    "ImageUrl": "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=1200\u0026q=80",
+    "Technologies": [
+      "Node.js",
+      "JavaScript",
+      "WebSocket"
+    ],
+    "LiveUrl": "",
+    "GitHubUrl": "https://github.com/",
+    "Problem": "Needed a quick realtime demo for class.",
+    "Solution": "Prototyped with WebSockets, then documented to port to .NET SignalR.",
+    "Features": [
+      "Rooms",
+      "Typing indicator",
+      "Presence",
+      "History"
+    ]
+  },
+  {
+    "Id": 6,
+    "Title": "UI Component Kit",
+    "Slug": "ui-component-kit",
+    "ShortDescription": "Reusable glassmorphism component library.",
+    "Description": "A small design system: buttons, cards, modals, toasts and timeline, used across this site.",
+    "Category": "UI/UX Design",
+    "Status": "Completed",
+    "Year": 2024,
+    "Featured": false,
+    "ImageUrl": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200\u0026q=80",
+    "Technologies": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "LiveUrl": "",
+    "GitHubUrl": "https://github.com/",
+    "Problem": "Every school project reinvented the same styles.",
+    "Solution": "Built one kit with tokens, then reused it here.",
+    "Features": [
+      "Design tokens",
+      "12 components",
+      "Dark mode",
+      "Reduced-motion support"
+    ]
+  }
+]

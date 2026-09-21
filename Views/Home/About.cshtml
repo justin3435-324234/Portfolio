@@ -1,0 +1,21 @@
+@using Portfolio.Data
+@{
+    ViewData["Title"] = "About";
+    var site = PortfolioStore.Site;
+}
+<section class="section narrow">
+    <span class="badge">ABOUT</span>
+    <div class="about-hero">
+        @if (!string.IsNullOrWhiteSpace(site.ProfileImageUrl))
+        {
+            <img class="profile-photo big" src="@site.ProfileImageUrl" alt="@site.DisplayName profile photo" />
+        }
+        <div><h1 class="reveal">@site.Headline</h1></div>
+    </div>
+    <p class="lede reveal">@site.Bio</p>
+    <div class="about-grid">
+        <div class="glass panel reveal"><h3>Skills</h3><div class="tags big">@foreach (var s in (site.Skills ?? new List<string>())) { <span>@s</span> }</div></div>
+        <div class="glass panel reveal"><h3>Details</h3><p>@site.Location · @site.Availability<br>Leave a comment on any project detail page<br>Admin can edit everything from the Dashboard</p></div>
+    </div>
+    <div class="hero-cta"><a class="btn btn-primary magnetic" asp-controller="Projects" asp-action="Index">Browse projects</a></div>
+</section>

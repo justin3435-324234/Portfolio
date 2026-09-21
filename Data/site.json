@@ -1,0 +1,28 @@
+{
+  "Primary": "#8b5cf6",
+  "Secondary": "#3b82f6",
+  "Accent": "#22d3ee",
+  "Background": "#07070a",
+  "Surface": "#12121a",
+  "DisplayName": "JUSTIN",
+  "BrandSuffix": ".DEV",
+  "Headline": "CRAFTING DIGITAL EXPERIENCES",
+  "Intro": "Hi, I\u0027m Justin a developer focused on modern web apps, and with a clean i checkout my projects to see more",
+  "Bio": "Create bigger things with small steps.",
+  "Location": "Philippines",
+  "Availability": "Available for projects",
+  "ProfileImageUrl": "/uploads/a891175ff11341abb786e0e4cb27312b.png",
+  "GitHubUrl": "https://github.com/",
+  "FacebookUrl": "https://facebook.com/",
+  "LinkedInUrl": "https://linkedin.com/",
+  "Skills": [
+    "C#",
+    "ASP.NET Core",
+    "SQL",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "Git",
+    "UI/UX"
+  ]
+}

@@ -1,0 +1,86 @@
+﻿@model List<Portfolio.Models.Project>
+@using Portfolio.Data
+@{
+    ViewData["Title"] = "Home";
+    var featured = ViewData["Featured"] as List<Portfolio.Models.Project> ?? new();
+    var all = Model;
+    var site = PortfolioStore.Site;
+    var isAdmin = Context.Session.GetString("IsAdmin") == "true";
+}
+
+<section class="hero">
+    <div class="hero-left reveal">
+        <span class="badge"><span class="pulse"></span> @site.Availability.ToUpper()</span>
+        <h1><span class="grad">@site.Headline</span></h1>
+        <p class="lede">@site.Intro</p>
+        <div class="hero-cta">
+            <a class="btn btn-primary magnetic" asp-controller="Projects" asp-action="Index">View my work →</a>
+            <a class="btn btn-ghost magnetic" asp-controller="Home" asp-action="About">About me</a>
+        </div>
+        <div class="stats">
+            <div class="stat"><strong>@all.Count</strong><span>Projects</span></div>
+            <div class="stat"><strong>@all.Select(p=>p.Category).Distinct().Count()</strong><span>Categories</span></div>
+            <div class="stat"><strong>@all.SelectMany(p=>p.Technologies).Distinct().Count()</strong><span>Technologies</span></div>
+            <div class="stat"><strong>2026</strong><span>Prefinals Quiz</span></div>
+        </div>
+    </div>
+    <div class="hero-right reveal">
+        <div class="holo-card float">
+            <div class="holo-ring"></div>
+            <div class="holo-ring r2"></div>
+            @if (!string.IsNullOrWhiteSpace(site.ProfileImageUrl))
+            {
+                <img class="holo-photo" src="@site.ProfileImageUrl" alt="@site.DisplayName profile photo" />
+            }
+            else
+            {
+                <div class="holo-core">@(site.DisplayName.Length > 0 ? site.DisplayName.Substring(0, 1) : "J")</div>
+            }
+            <div class="holo-caption">MVC · C# · Interactive UI</div>
+        </div>
+    </div>
+</section>
+
+@if (featured.Any())
+{
+<section class="section">
+    <h2 class="sec-title reveal">Featured work</h2>
+    <div class="grid feat-grid">
+        @foreach (var p in featured)
+        {
+        <div class="card-wrap reveal">
+        <a class="card" asp-controller="Projects" asp-action="Details" asp-route-id="@p.Id">
+            <div class="card-img"><img src="@p.ImageUrl" alt="@p.Title" loading="lazy" onerror="this.src='https://picsum.photos/seed/@p.Id/800/500'" /><span class="chip">@p.Category</span></div>
+            <div class="card-body">
+                <h3>@p.Title <span class="arrow">→</span></h3>
+                <p>@p.ShortDescription</p>
+                <div class="tags">@foreach (var t in p.Technologies.Take(4)) { <span>@t</span> }</div>
+            </div>
+        </a>
+        @if (isAdmin) { <a class="mini-edit" asp-controller="Admin" asp-action="Edit" asp-route-id="@p.Id">✎ Edit project</a> }
+        </div>
+        }
+    </div>
+</section>
+}
+
+<section class="section">
+    <h2 class="sec-title reveal">Latest projects</h2>
+    <div class="grid">
+        @foreach (var p in all.Take(6))
+        {
+        <div class="card-wrap reveal">
+        <a class="card" asp-controller="Projects" asp-action="Details" asp-route-id="@p.Id">
+            <div class="card-img"><img src="@p.ImageUrl" alt="@p.Title" loading="lazy" onerror="this.src='https://picsum.photos/seed/@p.Id/800/500'" /><span class="chip">@p.Year</span></div>
+            <div class="card-body">
+                <h3>@p.Title <span class="arrow">→</span></h3>
+                <p>@p.ShortDescription</p>
+                <div class="tags">@foreach (var t in p.Technologies.Take(4)) { <span>@t</span> }</div>
+            </div>
+        </a>
+        @if (isAdmin) { <a class="mini-edit" asp-controller="Admin" asp-action="Edit" asp-route-id="@p.Id">✎ Edit project</a> }
+        </div>
+        }
+    </div>
+    <div class="center"><a class="btn btn-ghost magnetic" asp-controller="Projects" asp-action="Index">Open table of contents</a></div>
+</section>

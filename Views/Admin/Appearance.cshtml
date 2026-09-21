@@ -1,0 +1,40 @@
+@model Portfolio.Models.SiteSettings
+@{ ViewData["Title"] = "Appearance"; }
+<section class="section narrow">
+    <span class="badge">ADMIN MODE · APPEARANCE</span>
+    <h1>Customize colors</h1>
+    <p class="muted">Changes apply to the overall UI instantly after save.</p>
+    <nav class="toc admin-tabs" aria-label="Admin sections">
+        <a asp-action="Index">Dashboard</a>
+        <a asp-action="Projects">Projects</a>
+    </nav>
+    <div class="glass panel">
+        <h3>Presets</h3>
+        <div class="preset-row">
+            @foreach (var pr in new[] { "neon", "aurora", "synthwave", "ocean", "crimson", "mono" })
+            {
+                <form asp-action="Appearance" method="post" class="inline">@Html.AntiForgeryToken()<input type="hidden" name="preset" value="@pr" /><button class="btn btn-ghost sm preset-@pr" type="submit">@pr</button></form>
+            }
+        </div>
+    </div>
+    <form asp-action="Appearance" method="post" class="glass panel cform big">
+        @Html.AntiForgeryToken()
+        <div class="color-grid">
+            <label class="color-item"><span>Primary</span><span class="color-row"><input type="color" name="Primary" value="@Model.Primary" /><input type="text" value="@Model.Primary" oninput="this.previousElementSibling.value=this.value" /></span></label>
+            <label class="color-item"><span>Secondary</span><span class="color-row"><input type="color" name="Secondary" value="@Model.Secondary" /><input type="text" value="@Model.Secondary" oninput="this.previousElementSibling.value=this.value" /></span></label>
+            <label class="color-item"><span>Accent</span><span class="color-row"><input type="color" name="Accent" value="@Model.Accent" /><input type="text" value="@Model.Accent" oninput="this.previousElementSibling.value=this.value" /></span></label>
+            <label class="color-item"><span>Background</span><span class="color-row"><input type="color" name="Background" value="@Model.Background" /><input type="text" value="@Model.Background" oninput="this.previousElementSibling.value=this.value" /></span></label>
+            <label class="color-item"><span>Surface / Card</span><span class="color-row"><input type="color" name="Surface" value="@Model.Surface" /><input type="text" value="@Model.Surface" oninput="this.previousElementSibling.value=this.value" /></span></label>
+        </div>
+        <div class="preview-box">
+            <span class="preview-dot" style="background:@Model.Primary"></span>
+            <span class="preview-dot" style="background:@Model.Secondary"></span>
+            <span class="preview-dot" style="background:@Model.Accent"></span>
+            <a class="btn btn-primary sm" style="pointer-events:none">Button preview</a>
+        </div>
+        <div class="hero-cta">
+            <button class="btn btn-primary" type="submit">Save colors →</button>
+        </div>
+    </form>
+    <form asp-action="ResetTheme" method="post" class="inline" data-confirm="Reset colors to default?">@Html.AntiForgeryToken()<button class="btn btn-danger-ghost sm" type="submit">Reset colors</button></form>
+</section>
